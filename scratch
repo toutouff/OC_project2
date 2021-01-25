@@ -1,0 +1,45 @@
+import requests
+from bs4 import BeautifulSoup
+
+for link in links:
+    url = link
+    reponse = requests.get(url)
+    articleLinkStart = 'http://books.toscrape.com/catalogue/'
+    if reponse.ok:
+        soup = BeautifulSoup(reponse.text, features="html.parser")
+        articles = soup.find_all('article', class_="product_pod")
+        for article in articles:
+            articleA = article.find('a')
+            articleLink = str(articleA['href'])
+            articleLink = articleLink.replace('../', '')
+            articleLinks.append(articleLinkStart + articleLink)
+
+for articleLink in articleLinks:
+    url = articleLink
+    reponse = requests.get(url)
+    if reponse.ok:
+        print(reponse)
+
+with open('articleLinks.txt', 'w') as file:
+    for articleLink in articleLinks:
+        file.write(articleLink + '\n')
+
+
+        for link in links:
+            reponse = requests.get(link)
+            soup = BeautifulSoup(reponse.text, features="html.parser")
+            li = soup.find('li', class_=('next'))
+            if li != None:
+                a = li.find('a')
+                isNextButton = True
+
+
+list = []
+for i in range(10):
+    list.append(i)
+
+for num in list:
+    if num == 0:
+        pass
+    else:
+        print(num)
