@@ -2,6 +2,7 @@ import requests
 from bs4 import BeautifulSoup
 
 class Page(object):
+
     def __init__(self, url):
         self.url = url
 
@@ -31,7 +32,13 @@ class ProductPage(Page):
         allP = self.soup.findAll('p')
         self.productdescription = allP[3].text
 
+    def getImg(self):
+        row = self.soup.find_all('div' , class_='col-sm-6')
+        img = row[0].find('img')
+        self.img = img['src']
+
+
 
 productpage = ProductPage("http://books.toscrape.com/catalogue/a-light-in-the-attic_1000/index.html")
 productpage.getInfo()
-print(productpage.productdescription)
+productpage.getRow()
